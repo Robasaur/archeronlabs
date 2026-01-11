@@ -27,4 +27,4 @@ A public-first CloudOps lab portal developed by myself to design, document, and 
 
 1) Install dependencies
 ```bash
-pnpm install
+npm install
