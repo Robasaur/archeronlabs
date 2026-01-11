@@ -1,26 +1,22 @@
 import { db } from "@/lib/db"
 
-type TableRow = {
-  tablename: string
-}
+type TableRow = { tablename: string }
 
 export async function GET() {
   try {
-    const tables: TableRow[] = await db.$queryRaw<TableRow[]>`
-      select tablename
+    const tables = await db.$queryRaw<TableRow[]>`
+      select tablename::text as tablename
       from pg_tables
       where schemaname = 'public'
       order by tablename;
     `
 
-    const verificationExists = tables.some(
-      (t: TableRow) => t.tablename === "verification"
-    )
+    const verificationExists = tables.some((t) => t.tablename === "verification")
 
     return Response.json({
       ok: true,
       verificationExists,
-      tables: tables.map((t: TableRow) => t.tablename),
+      tables: tables.map((t) => t.tablename),
     })
   } catch (e: any) {
     return Response.json(

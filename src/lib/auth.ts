@@ -7,7 +7,7 @@ export const auth = betterAuth({
     async () => (await import("./db")).db,
     { provider: "postgresql" }
   ),
-
+  secret: process.env.AUTH_SECRET,
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID as string,
