@@ -16,9 +16,11 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  role          String   @default("USER")
 
   @@unique([email])
   @@map("user")
+  
   
   profile Profile?
 }
