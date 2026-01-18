@@ -1,12 +1,10 @@
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { nextCookies } from "better-auth/next-js"
+import { db } from "./db"
 
 export const auth = betterAuth({
-  database: prismaAdapter(
-    async () => (await import("./db")).db,
-    { provider: "postgresql" }
-  ),
+  database: prismaAdapter(db, { provider: "postgresql" }),
   secret: process.env.AUTH_SECRET,
   socialProviders: {
     github: {
@@ -14,6 +12,5 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     },
   },
-
   plugins: [nextCookies()],
 })
